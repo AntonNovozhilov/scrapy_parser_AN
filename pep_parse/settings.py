@@ -1,10 +1,10 @@
-from pep_parse.constants import LOG_DIR
+from pep_parse.constants import LOG_DIR, RES, SPIDER_MODUL
 
 BOT_NAME = "pep_parse"
 
-SPIDER_MODULES = ["pep_parse.spiders"]
+SPIDER_MODULES = [SPIDER_MODUL]
 
-NEWSPIDER_MODULE = "pep_parse.spiders"
+NEWSPIDER_MODULE = SPIDER_MODUL
 
 ROBOTSTXT_OBEY = True
 
@@ -17,7 +17,7 @@ LOG_FILE = LOG_DIR / "scrapy_log.txt"
 LOG_LEVEL = "INFO"
 
 FEEDS = {
-    "results/pep_%(time)s.csv": {
+    f"{RES}/pep_%(time)s.csv": {
         "format": "csv",
         "fields": ["number", "name", "status"],
         "overwrite": True,
