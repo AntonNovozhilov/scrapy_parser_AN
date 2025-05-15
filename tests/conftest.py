@@ -8,13 +8,11 @@ import pytest
 try:
     import pep_parse
 except ModuleNotFoundError:
-    raise AssertionError('Назовите проект `pep_parse`')
+    raise AssertionError("Назовите проект `pep_parse`")
 try:
     from pep_parse import settings
 except Exception:
-    raise AssertionError(
-        'Возникло исключение при импорте файла `pep_parse.settings`.'
-    )
+    raise AssertionError("Возникло исключение при импорте файла `pep_parse.settings`.")
 
 
 def find_results_path(module):
@@ -24,13 +22,13 @@ def find_results_path(module):
             continue
         if isinstance(value, str):
             with suppress(Exception):
-                cleaned_value = value.rstrip('/')
+                cleaned_value = value.rstrip("/")
                 basename = os.path.basename(cleaned_value)
-                if basename == 'results' and len(cleaned_value.split('/')) > 1:
+                if basename == "results" and len(cleaned_value.split("/")) > 1:
                     results_path_var_name = name
                     break
         elif isinstance(value, Path):
-            if value.name == 'results' and len(value.parts) > 1:
+            if value.name == "results" and len(value.parts) > 1:
                 results_path_var_name = name
                 break
     return results_path_var_name
@@ -39,11 +37,11 @@ def find_results_path(module):
 @pytest.fixture
 def mock_dirs(monkeypatch):
     file_path = Path(__file__).parent
-    tmp_path = Path(os.path.relpath(file_path / '_tmp'))
+    tmp_path = Path(os.path.relpath(file_path / "_tmp"))
     tmp_path.mkdir(exist_ok=True)
-    mock_results_path = tmp_path / 'results'
-    if hasattr(settings, 'BASE_DIR'):
-        monkeypatch.setattr(settings, 'BASE_DIR', tmp_path)
+    mock_results_path = tmp_path / "results"
+    if hasattr(settings, "BASE_DIR"):
+        monkeypatch.setattr(settings, "BASE_DIR", tmp_path)
     results_var_name = find_results_path(settings)
     if results_var_name:
         monkeypatch.setattr(settings, results_var_name, mock_results_path)
@@ -52,10 +50,10 @@ def mock_dirs(monkeypatch):
         from pep_parse import pipelines
     except Exception:
         raise AssertionError(
-            'Возникло исключение при импорте файла `pep_parse.pipelines`.'
+            "Возникло исключение при импорте файла `pep_parse.pipelines`."
         )
-    if hasattr(pipelines, 'BASE_DIR'):
-        monkeypatch.setattr(pipelines, 'BASE_DIR', tmp_path)
+    if hasattr(pipelines, "BASE_DIR"):
+        monkeypatch.setattr(pipelines, "BASE_DIR", tmp_path)
     results_var_name = find_results_path(pipelines)
     if results_var_name:
         monkeypatch.setattr(pipelines, results_var_name, mock_results_path)
@@ -65,17 +63,17 @@ def mock_dirs(monkeypatch):
 
 
 @pytest.fixture
-@pytest.mark.usefixtures('mock_dirs')
+@pytest.mark.usefixtures("mock_dirs")
 def pep_parser_pipline_class():
     try:
         return pep_parse.pipelines.PepParsePipeline
     except Exception:
         raise AssertionError(
-            'Возникло исключение при импорте файла `pep_parse.pipelines`.'
+            "Возникло исключение при импорте файла `pep_parse.pipelines`."
         )
 
 
 @pytest.fixture
-@pytest.mark.usefixtures('mock_dirs')
+@pytest.mark.usefixtures("mock_dirs")
 def parser_settings():
     return settings
