@@ -24,9 +24,9 @@ class PepParsePipeline:
     def close_spider(self, spider):
         """Задаем директорию куда сохранить файл с данными."""
         data = (
-            [("Статус", "Количество")]
-            + list(self.status_dict.items())
-            + [("Total", sum(self.status_dict.values()))]
+            ("Статус", "Количество"),
+            *self.status_dict.items(),
+            ("Total", sum(self.status_dict.values()))
         )
         with open(self.file_path, "w", encoding="utf-8") as f:
             writer = csv.writer(f)
