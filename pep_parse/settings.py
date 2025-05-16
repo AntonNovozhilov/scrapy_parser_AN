@@ -1,10 +1,10 @@
-from pep_parse.constants import LOG_DIR, RES, SPIDER_MODUL
+from pep_parse.constants import LOG_DIR, RES
 
 BOT_NAME = "pep_parse"
 
-SPIDER_MODULES = [SPIDER_MODUL]
+NEWSPIDER_MODULE = "pep_parse.spiders"
 
-NEWSPIDER_MODULE = SPIDER_MODUL
+SPIDER_MODULES = [NEWSPIDER_MODULE]
 
 ROBOTSTXT_OBEY = True
 

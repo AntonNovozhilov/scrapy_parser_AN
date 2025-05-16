@@ -1,6 +1,7 @@
-import re
-import scrapy
 import logging
+import re
+
+import scrapy
 
 from pep_parse.items import PepParseItem
 
